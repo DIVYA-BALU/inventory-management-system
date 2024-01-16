@@ -2,7 +2,8 @@ package com.divya.inventorymanagement.Users;
 
 public enum Role {
         USER,
+        ADMIN,
         MANAGER,
-        ADMIN
+        WAREHOUSE_STAFF
 
     }
