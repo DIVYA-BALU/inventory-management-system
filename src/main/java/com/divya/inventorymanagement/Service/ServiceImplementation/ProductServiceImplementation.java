@@ -41,10 +41,10 @@ public class ProductServiceImplementation implements ProductService {
     
     }
     @Override
-    public Product updateProduct(Integer id) {
+    public Product updateProduct(Integer id, Product product) {
         try{
-            Product product = productRepository.findById(id).get();
-            if(product == null)
+            Product product1 = productRepository.findById(id).get();
+            if(product1 == null)
                 return null;
             else
                 return productRepository.save(product);

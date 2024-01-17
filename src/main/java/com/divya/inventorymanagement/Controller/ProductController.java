@@ -57,9 +57,9 @@ public class ProductController {
 
     //PutMapping for updating a product
     @PutMapping("/updateproduct/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Integer id){
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer id , @RequestBody Product product){
         try {
-            return ResponseEntity.ok(productService.updateProduct(id));
+            return ResponseEntity.ok(productService.updateProduct(id, product));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
