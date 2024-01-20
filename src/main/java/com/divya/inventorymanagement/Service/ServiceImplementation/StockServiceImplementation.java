@@ -26,25 +26,15 @@ public class StockServiceImplementation implements StockService{
     }
 
     @Override
-    public Stock updateStockById(int id, Stock stock) {
+    public Stock updateStockById(Stock stock) {
        try{
-           Stock stockToUpdate = stockRepository.findById(id).get();
+           Stock stockToUpdate = stockRepository.findById(stock.getStockId()).get();
            stockRepository.save(stockToUpdate);
            return stockToUpdate;
        }
        catch(Exception e){
            return null;
        }
-    }
-
-    @Override
-    public Stock getStockById(int id) {
-        
-        try{
-            return stockRepository.findById(id).get();
-        }catch(Exception e){
-            return null;
-        }
     }
 
     @Override
@@ -60,6 +50,34 @@ public class StockServiceImplementation implements StockService{
     public List<Stock> getAllStocks() {
         try{
             return stockRepository.findAll();
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Stock> sortStockByQuantity() {
+        try{
+            return stockRepository.sortStockByQuantity();
+        }catch(Exception e){
+            return null;
+        } 
+    }
+
+    @Override
+    public List<Stock> searchStockByName(String name) {
+        try{
+            return stockRepository.findByNameIgnoreCase(name);
+            
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Stock> sortStockByLastUpdatedDate() {
+        try{
+            return stockRepository.sortStockByLastUpdatedDate();
         }catch(Exception e){
             return null;
         }

@@ -43,9 +43,9 @@ public class OrderDetailsServiceImplementation implements OrderDetailsService{
     }
 
     @Override
-    public OrderDetails updateOrderDetailsById(int id, OrderDetails orderDetails) {
+    public OrderDetails updateOrderDetailsById(OrderDetails orderDetails) {
         try {
-            OrderDetails orderDetailsToUpdate = orderDetailsRepository.findById(id).get();
+            OrderDetails orderDetailsToUpdate = orderDetailsRepository.findById(orderDetails.getOrderDetailsId()).get();
             orderDetailsRepository.save(orderDetailsToUpdate);
             return orderDetailsToUpdate;
         } catch (Exception e) {
@@ -60,6 +60,15 @@ public class OrderDetailsServiceImplementation implements OrderDetailsService{
             return "Order details deleted successfully";
         }catch(Exception e){
             return "Order details not found";
+        }
+    }
+
+    @Override
+    public List<OrderDetails> sortByDatePurchased() {
+        try{
+            return orderDetailsRepository.sortByDatePurchasedDesc();
+        }catch(Exception e){
+            return null;
         }
     }
     

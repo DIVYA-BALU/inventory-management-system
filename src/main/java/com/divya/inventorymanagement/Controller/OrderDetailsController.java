@@ -41,20 +41,11 @@ public class OrderDetailsController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-    // Get request to get order details by id
-    @GetMapping("/getorderdetailsbyid/{id}")
-    public ResponseEntity<OrderDetails> getOrderDetailsById(@PathVariable int id){
-        try{
-            return ResponseEntity.ok(orderDetailsService.getOrderDetailsById(id));
-        }catch(Exception e){
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
     // Put request to update order details by id
-    @PutMapping("/updateorderdetailsbyid/{id}")
-    public ResponseEntity<OrderDetails> updateOrderDetailsById(@PathVariable int id, @RequestBody OrderDetails orderDetails){
+    @PutMapping("/updateorderdetailsbyid")
+    public ResponseEntity<OrderDetails> updateOrderDetailsById( @RequestBody OrderDetails orderDetails){
         try{
-            return ResponseEntity.ok(orderDetailsService.updateOrderDetailsById(id, orderDetails));
+            return ResponseEntity.ok(orderDetailsService.updateOrderDetailsById(orderDetails));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(null);
         }
@@ -69,5 +60,14 @@ public class OrderDetailsController {
         }
     }
 
-    
+      // sort by date purchased
+      @GetMapping("/sortbydatepurchased")
+      public ResponseEntity<List<OrderDetails>> sortByDatePurchased(){
+          try{
+              return ResponseEntity.ok(orderDetailsService.sortByDatePurchased());
+          }catch(Exception e){
+              return ResponseEntity.badRequest().body(null);
+          }
+      }
+
 }

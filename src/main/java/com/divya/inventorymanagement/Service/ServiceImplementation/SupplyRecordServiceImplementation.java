@@ -26,27 +26,16 @@ public class SupplyRecordServiceImplementation implements SupplyRecordService{
     }
 
     @Override
-    public SupplyRecord updateSupplyRecordById(int id, SupplyRecord supplyRecord) {
+    public SupplyRecord updateSupplyRecordById(SupplyRecord supplyRecord) {
        try{
-           SupplyRecord supplyRecordToUpdate = supplyRecordRepository.findById(id).get();
-           supplyRecordRepository.save(supplyRecordToUpdate);
-           return supplyRecordToUpdate;
+           supplyRecordRepository.save(supplyRecord);
+           return supplyRecord;
        }
        catch(Exception e){
            return null;
        }
     }
 
-
-    @Override
-    public SupplyRecord getSupplyRecordsBySupplierId(int supplierId) {
-        
-        try{
-            return supplyRecordRepository.findById(supplierId).get();
-        }catch(Exception e){
-            return null;
-        }
-    }
 
     @Override
     public SupplyRecord addSupplyRecord(SupplyRecord supplyRecord) {

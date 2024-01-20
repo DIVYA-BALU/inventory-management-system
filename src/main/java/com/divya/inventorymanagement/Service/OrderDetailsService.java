@@ -12,8 +12,9 @@ public interface OrderDetailsService {
 
     OrderDetails getOrderDetailsById(int id);
 
-    OrderDetails updateOrderDetailsById(int id, OrderDetails orderDetails);
+    OrderDetails updateOrderDetailsById(OrderDetails orderDetails);
 
     String deleteOrderDetailsById(int id);
     
+    List<OrderDetails> sortByDatePurchased();
 }

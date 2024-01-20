@@ -14,7 +14,7 @@ public class ProductServiceImplementation implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-    
+
     @Override
     public Product addProduct(Product product) {
         try {
@@ -23,6 +23,7 @@ public class ProductServiceImplementation implements ProductService {
             return null;
         }
     }
+
     @Override
     public List<Product> getProducts() {
         try {
@@ -31,39 +32,50 @@ public class ProductServiceImplementation implements ProductService {
             return null;
         }
     }
+
     @Override
-    public Product getProductById(Integer id) {
-       try {
-           return productRepository.findById(id).get();
-       } catch (Exception e) {
-           return null;
-       } 
-    
-    }
-    @Override
-    public Product updateProduct(Integer id, Product product) {
-        try{
-            Product product1 = productRepository.findById(id).get();
-            if(product1 == null)
+    public Product updateProduct(Product product) {
+        try {
+            Product product1 = productRepository.findById(product.getProductId()).get();
+            if (product1 == null)
                 return null;
             else
                 return productRepository.save(product);
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
+
     @Override
     public String deleteProduct(Integer id) {
-        try{
+        try {
             Product product = productRepository.findById(id).get();
-            if(product == null)
+            if (product == null)
                 return "Product not found";
-            else{
+            else {
                 productRepository.delete(product);
                 return "Product deleted successfully";
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             return "Product not found";
+        }
+    }
+
+    @Override
+    public List<Product> getProductByName(String name) {
+        try {
+            return productRepository.findByProductNameIgnoreCase(name);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Product> getProductByCategory(String category) {
+        try {
+            return productRepository.findByCategoryIgnoreCase(category);
+        } catch (Exception e) {
+            return null;
         }
     }
 

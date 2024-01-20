@@ -39,20 +39,11 @@ public class StockController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-    // Get request to get stock by id
-    @GetMapping("/getstockbyid/{id}")
-    public ResponseEntity<Stock> getStockById(int id){
-        try{
-            return ResponseEntity.ok(stockService.getStockById(id));
-        }catch(Exception e){
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
     // Put request to update stock by id
-    @PutMapping("/updatestockbyid/{id}")
-    public ResponseEntity<Stock> updateStockById(int id, Stock stock){
+    @PutMapping("/updatestockbyid")
+    public ResponseEntity<Stock> updateStockById(Stock stock){
         try{
-            return ResponseEntity.ok(stockService.updateStockById(id, stock));
+            return ResponseEntity.ok(stockService.updateStockById(stock));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(null);
         }
@@ -67,5 +58,34 @@ public class StockController {
         }
     }
     
+    //sort and display stock by quanity in both ascending and descending order
+    @GetMapping("/sortstockbyquantity")
+    public ResponseEntity<List<Stock>> sortStockByQuantity(){
+        try{
+            return ResponseEntity.ok(stockService.sortStockByQuantity());
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
+    //search stock by name
+    @GetMapping("/searchstockbyname/{name}")
+    public ResponseEntity<List<Stock>> searchStockByName(String name){
+        try{
+            return ResponseEntity.ok(stockService.searchStockByName(name));
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    //dort stock by last updated date
+    @GetMapping("/sortstockbylastupdateddate")
+    public ResponseEntity<List<Stock>> sortStockByLastUpdatedDate(){
+        try{
+            return ResponseEntity.ok(stockService.sortStockByLastUpdatedDate());
+        }catch(Exception e){
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+    
 }

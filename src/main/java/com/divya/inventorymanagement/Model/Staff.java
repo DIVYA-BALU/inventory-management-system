@@ -1,15 +1,10 @@
 package com.divya.inventorymanagement.Model;
 
-import java.sql.Date;
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,15 +13,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Stock {
+public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer stockId;
+    private Integer staffId;
+    
+    private String staffName;
 
-    @Column(nullable = false)
-    private String productName;
+    @Column(unique = true, nullable = false)
+    private String email;
 
-    private Integer quantity;
+    private String phoneNumber;
 
-    private Date LastUpdated;
+    private String location;
+
+    private String staffType;
 }

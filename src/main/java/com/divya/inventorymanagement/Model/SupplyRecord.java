@@ -1,7 +1,8 @@
 package com.divya.inventorymanagement.Model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,15 +22,18 @@ public class SupplyRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer supplyId;
 
-    @ManyToOne
-    @JoinColumn(name = "contact_id", nullable = false)
-    private Contact supplier;
+     @Column(nullable = false)
+    private String supplierEmail;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    @Column(nullable = false)
+    private String productName;
 
-    private LocalDate supplyDate;
+    private Date supplyDate;
+    
     private Integer quantitySupplied;
+
+    @ManyToOne
+    @JoinColumn(name = "wareHouseStaffId", nullable = false)
+    private Staff staff;
     
 }

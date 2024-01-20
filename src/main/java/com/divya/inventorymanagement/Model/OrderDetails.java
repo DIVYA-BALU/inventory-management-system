@@ -1,8 +1,10 @@
 package com.divya.inventorymanagement.Model;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,17 +24,21 @@ public class OrderDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderDetailsId;
 
-    @ManyToOne
-    @JoinColumn(name = "product_order_id")
-    private ProductOrder order;
+    @Column(nullable = false)
+    private String productName;
 
-    @ManyToOne
-    @JoinColumn(name = "Contact_id", nullable = false)
-    private Contact customer;
+    @Column(nullable = false)
+    private String email;
 
-    private LocalDate orderDate;
+    private Date orderDate;
+
+    private Integer quantityOrdered;
 
     private BigDecimal totalAmount;
+
+    @ManyToOne
+    @JoinColumn(name = "managerId", nullable = false)
+    private Staff staff;
 
     
 }

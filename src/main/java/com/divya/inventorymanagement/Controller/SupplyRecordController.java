@@ -40,20 +40,12 @@ public class SupplyRecordController {
             return ResponseEntity.badRequest().body(null);
         }
     }
-    // Get request to get supply records by supplier id
-    @GetMapping("/getsupplyrecordsbysupplierid/{supplierId}")
-    public ResponseEntity<SupplyRecord> getSupplyRecordsBySupplierId(@RequestParam int supplierId){
-        try{
-            return ResponseEntity.ok(supplyRecordService.getSupplyRecordsBySupplierId(supplierId));
-        }catch(Exception e){
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
+
     // Put request to update supply record by id
-    @PostMapping("/updatesupplyrecordbyid/{id}")
-    public ResponseEntity<SupplyRecord> updateSupplyRecordById(@RequestParam int id, @RequestBody SupplyRecord supplyRecord){
+    @PostMapping("/updatesupplyrecordbyid")
+    public ResponseEntity<SupplyRecord> updateSupplyRecordById(@RequestBody SupplyRecord supplyRecord){
         try{
-            return ResponseEntity.ok(supplyRecordService.updateSupplyRecordById(id, supplyRecord));
+            return ResponseEntity.ok(supplyRecordService.updateSupplyRecordById(supplyRecord));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(null);
         }

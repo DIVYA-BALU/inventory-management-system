@@ -10,10 +10,15 @@ public interface StockService {
 
     List<Stock> getAllStocks();
 
-    Stock getStockById(int id);
-
-    Stock updateStockById(int id, Stock stock);
+    Stock updateStockById(Stock stock);
 
     String deleteStockById(int id);
+
+    List<Stock> sortStockByQuantity();
+
+    List<Stock> searchStockByName(String name);
+
+    List<Stock> sortStockByLastUpdatedDate();
+    
     
 }

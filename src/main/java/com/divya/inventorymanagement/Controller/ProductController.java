@@ -19,7 +19,7 @@ import com.divya.inventorymanagement.Service.ProductService;
 
 @RestController
 @RequestMapping("/api/product")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class ProductController {
     
     @Autowired
@@ -45,21 +45,11 @@ public class ProductController {
         }
     }
 
-    //GetMapping for getting a product by id
-    @GetMapping("/getproductbyid/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Integer id){
-        try {
-            return ResponseEntity.ok(productService.getProductById(id));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
-
     //PutMapping for updating a product
-    @PutMapping("/updateproduct/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Integer id , @RequestBody Product product){
+    @PutMapping("/updateproduct")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product){
         try {
-            return ResponseEntity.ok(productService.updateProduct(id, product));
+            return ResponseEntity.ok(productService.updateProduct(product));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -75,4 +65,23 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/getproductbyname/{name}")
+    public ResponseEntity<List<Product>> getProductByName(@PathVariable String name) {
+        try {
+            return ResponseEntity.ok(productService.getProductByName(name));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+     // GetMapping for getting a product by category ignore case as search functionality
+     //@PreAuthorize("hasRole('MANAGER')")
+     @GetMapping("/getproductbycategory/{category}")
+     public ResponseEntity<List<Product>> getProductByCategory(@PathVariable String category) {
+         try {
+             return ResponseEntity.ok(productService.getProductByCategory(category));
+         } catch (Exception e) {
+             return ResponseEntity.badRequest().body(null);
+         }
+     }
 }
