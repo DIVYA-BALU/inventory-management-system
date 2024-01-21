@@ -19,6 +19,7 @@ import com.divya.inventorymanagement.Service.ContactService;
 
 @RestController
 @RequestMapping("api/contact")
+@PreAuthorize("hasRole('ADMIN') or hasRole('WAREHOUSE_STAFF') or hasRole('MANAGER')")
 public class ContactController {
 
     @Autowired
