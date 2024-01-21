@@ -42,10 +42,10 @@ public class OrderDetailsController {
         }
     }
     // Put request to update order details by id
-    @PutMapping("/updateorderdetailsbyid")
-    public ResponseEntity<OrderDetails> updateOrderDetailsById( @RequestBody OrderDetails orderDetails){
+    @PutMapping("/updateorderdetails")
+    public ResponseEntity<OrderDetails> updateOrderDetails( @RequestBody OrderDetails orderDetails){
         try{
-            return ResponseEntity.ok(orderDetailsService.updateOrderDetailsById(orderDetails));
+            return ResponseEntity.ok(orderDetailsService.updateOrderDetails(orderDetails));
         }catch(Exception e){
             return ResponseEntity.badRequest().body(null);
         }

@@ -20,7 +20,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer productId;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String productName;
 
     private String category;

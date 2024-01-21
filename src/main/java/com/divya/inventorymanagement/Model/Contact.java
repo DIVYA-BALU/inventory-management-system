@@ -21,11 +21,12 @@ public class Contact {
 
     private String contactName;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
     
-    private String phoneNumber;
+    private Integer phoneNumber;
 
+    @Column(nullable = false)
     private  String contactType;
 
     private String location;

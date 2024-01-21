@@ -1,5 +1,6 @@
 package com.divya.inventorymanagement.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,10 +18,10 @@ public interface StockRepository extends JpaRepository<Stock,Integer>{
 
     //Query to find stock by name by ignoring case
     @Query("SELECT s FROM Stock s WHERE LOWER(s.productName) = LOWER(:name)")
-    List<Stock> findByNameIgnoreCase(String name);
+    Stock findByNameIgnoreCase(String name);
 
     //Query to sort stock by last updated date
     @Query("SELECT s FROM Stock s ORDER BY s.LastUpdated DESC")
     List<Stock> sortStockByLastUpdatedDate();
-    
+
 }

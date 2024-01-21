@@ -1,24 +1,25 @@
 package com.divya.inventorymanagement.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.divya.inventorymanagement.Model.Stock;
 
 public interface StockService {
 
-    Stock addStock(Stock stock);
 
     List<Stock> getAllStocks();
 
-    Stock updateStockById(Stock stock);
-
-    String deleteStockById(int id);
-
     List<Stock> sortStockByQuantity();
 
-    List<Stock> searchStockByName(String name);
-
     List<Stock> sortStockByLastUpdatedDate();
+
+    void addStock(String productName, Integer quantitySupplied, Date LastUpdated);
+
+    Stock getStockByProductName(String productName);
+
+    void updateStockQuantityByProductName(String productName, Integer quantitySupplied, Date date);
     
+    public void updateStockQuantity(String productName, Integer quantitySupplied, Date lastUpdated);
     
 }

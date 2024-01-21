@@ -36,11 +36,7 @@ public class ProductServiceImplementation implements ProductService {
     @Override
     public Product updateProduct(Product product) {
         try {
-            Product product1 = productRepository.findById(product.getProductId()).get();
-            if (product1 == null)
-                return null;
-            else
-                return productRepository.save(product);
+            return productRepository.save(product);
         } catch (Exception e) {
             return null;
         }
@@ -50,12 +46,8 @@ public class ProductServiceImplementation implements ProductService {
     public String deleteProduct(Integer id) {
         try {
             Product product = productRepository.findById(id).get();
-            if (product == null)
-                return "Product not found";
-            else {
                 productRepository.delete(product);
                 return "Product deleted successfully";
-            }
         } catch (Exception e) {
             return "Product not found";
         }

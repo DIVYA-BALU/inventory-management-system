@@ -10,8 +10,6 @@ public interface SupplyRecordService {
 
     List<SupplyRecord> getAllSupplyRecords();
 
-    SupplyRecord updateSupplyRecordById(int id, SupplyRecord supplyRecord);
-
-    String deleteSupplyRecordById(int id);
+    SupplyRecord updateSupplyRecord(SupplyRecord supplyRecord);
     
 }

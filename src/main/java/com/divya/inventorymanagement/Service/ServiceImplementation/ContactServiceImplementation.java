@@ -43,11 +43,9 @@ public class ContactServiceImplementation implements ContactService{
     }
 
     @Override
-    public Contact updateContactById(int id, Contact contact) {
+    public Contact updateContactById(Contact contact) {
         try{
-            Contact contactToUpdate = contactRepository.findById(id).get();
-            contactRepository.save(contactToUpdate);
-            return contactToUpdate;
+            return contactRepository.save(contact);
         }catch(Exception e){
             return null;
         }
@@ -55,10 +53,11 @@ public class ContactServiceImplementation implements ContactService{
 
     @Override
     public String deleteContactById(int id) {
-        try {
-            contactRepository.deleteById(id);
+         try{
+            Contact contact = contactRepository.findById(id).get();
+            contactRepository.delete(contact);
             return "Contact deleted successfully";
-        } catch (Exception e) {
+        }catch(Exception e){
             return "Contact not found";
         }
     }

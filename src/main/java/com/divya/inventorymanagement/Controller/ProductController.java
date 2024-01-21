@@ -19,14 +19,14 @@ import com.divya.inventorymanagement.Service.ProductService;
 
 @RestController
 @RequestMapping("/api/product")
-//@PreAuthorize("hasRole('ADMIN')")
 public class ProductController {
     
     @Autowired
     private ProductService productService;
 
     //PostMapping for adding a product
-    @PostMapping("/addProducts")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('WAREHOUSE_STAFF')")
+    @PostMapping("/addproduct")
     public ResponseEntity<Product> addProduct(@RequestBody Product product){
         try {
             return ResponseEntity.ok(productService.addProduct(product));
@@ -35,7 +35,7 @@ public class ProductController {
         }
     }
     //GetMapping for getting all products
-    //  @PreAuthorize("hasRole('MANAGER')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('WAREHOUSE_STAFF') or hasRole('ADMIN')")
     @GetMapping("/getproducts")
     public ResponseEntity<List<Product>> getProducts(){
         try {
@@ -46,6 +46,7 @@ public class ProductController {
     }
 
     //PutMapping for updating a product
+    @PreAuthorize("hasRole('WAREHOUSE_STAFF') or hasRole('ADMIN')")
     @PutMapping("/updateproduct")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product){
         try {
@@ -56,6 +57,7 @@ public class ProductController {
     }
     
     //DeleteMapping for deleting a product
+    @PreAuthorize("hasRole('ADMIN') or hasRole('WAREHOUSE_STAFF')")
     @DeleteMapping("/deleteproduct/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Integer id){
         try {
@@ -65,6 +67,7 @@ public class ProductController {
         }
     }
 
+    @PreAuthorize("hasRole('MANAGER') or hasRole('WAREHOUSE_STAFF') or hasRole('ADMIN')")
     @GetMapping("/getproductbyname/{name}")
     public ResponseEntity<List<Product>> getProductByName(@PathVariable String name) {
         try {
@@ -75,7 +78,7 @@ public class ProductController {
     }
 
      // GetMapping for getting a product by category ignore case as search functionality
-     //@PreAuthorize("hasRole('MANAGER')")
+     @PreAuthorize("hasRole('MANAGER') or hasRole('WAREHOUSE_STAFF') or hasRole('ADMIN')")
      @GetMapping("/getproductbycategory/{category}")
      public ResponseEntity<List<Product>> getProductByCategory(@PathVariable String category) {
          try {

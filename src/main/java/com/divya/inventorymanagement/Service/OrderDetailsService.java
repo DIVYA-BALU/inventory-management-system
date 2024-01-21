@@ -12,7 +12,7 @@ public interface OrderDetailsService {
 
     OrderDetails getOrderDetailsById(int id);
 
-    OrderDetails updateOrderDetailsById(OrderDetails orderDetails);
+    OrderDetails updateOrderDetails(OrderDetails orderDetails);
 
     String deleteOrderDetailsById(int id);
     

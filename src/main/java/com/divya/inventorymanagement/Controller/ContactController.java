@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
     //Post request to add contact
+    @PreAuthorize("hasRole('ADMIN') or hasRole('WAREHOUSE_STAFF')")
     @PostMapping("/addcontact")
     public ResponseEntity<Contact> addContact(@RequestBody Contact contact){
         try {
@@ -53,10 +55,10 @@ public class ContactController {
         }
     }
     //Put request to update contact by id
-    @PutMapping("/updatecontactbyid/{id}")
-    public ResponseEntity<Contact> updateContactById(@PathVariable("id") int id,@RequestBody Contact contact){
+    @PutMapping("/updatecontact")
+    public ResponseEntity<Contact> updateContactById(@RequestBody Contact contact){
         try {
-            return ResponseEntity.ok(contactService.updateContactById(id,contact));
+            return ResponseEntity.ok(contactService.updateContactById(contact));
             
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
@@ -66,8 +68,7 @@ public class ContactController {
     @DeleteMapping("/deletecontactbyid/{id}")
     public ResponseEntity<String> deleteContactById(@PathVariable("id") int id){
         try {
-            contactService.deleteContactById(id);
-            return ResponseEntity.ok("Contact Deleted Successfully");
+            return ResponseEntity.ok(contactService.deleteContactById(id));
             
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);

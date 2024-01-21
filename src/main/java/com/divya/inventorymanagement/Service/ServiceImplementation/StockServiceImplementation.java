@@ -1,5 +1,6 @@
 package com.divya.inventorymanagement.Service.ServiceImplementation;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,37 +15,6 @@ public class StockServiceImplementation implements StockService{
 
     @Autowired
     private StockRepository stockRepository;
-
-    @Override
-    public String deleteStockById(int id) {
-        try{
-            stockRepository.deleteById(id);
-            return "Stock deleted successfully";
-        }catch(Exception e){
-            return "Stock not found";
-        }
-    }
-
-    @Override
-    public Stock updateStockById(Stock stock) {
-       try{
-           Stock stockToUpdate = stockRepository.findById(stock.getStockId()).get();
-           stockRepository.save(stockToUpdate);
-           return stockToUpdate;
-       }
-       catch(Exception e){
-           return null;
-       }
-    }
-
-    @Override
-    public Stock addStock(Stock stock) {
-        try{
-            return stockRepository.save(stock);
-        }catch(Exception e){
-            return null;
-        }
-    }
 
     @Override
     public List<Stock> getAllStocks() {
@@ -65,16 +35,6 @@ public class StockServiceImplementation implements StockService{
     }
 
     @Override
-    public List<Stock> searchStockByName(String name) {
-        try{
-            return stockRepository.findByNameIgnoreCase(name);
-            
-        }catch(Exception e){
-            return null;
-        }
-    }
-
-    @Override
     public List<Stock> sortStockByLastUpdatedDate() {
         try{
             return stockRepository.sortStockByLastUpdatedDate();
@@ -82,5 +42,38 @@ public class StockServiceImplementation implements StockService{
             return null;
         }
     }
+
+    @Override
+    public void addStock(String productName, Integer quantitySupplied , Date LastUpdated) {
+        Stock stock=new Stock();
+        stock.setProductName(productName);
+        stock.setQuantity(quantitySupplied);
+        stock.setLastUpdated(LastUpdated);
+        stockRepository.save(stock);
+    }
+
+    @Override
+    public Stock getStockByProductName(String productName) {
+       try{
+           return stockRepository.findByNameIgnoreCase(productName);   
+         }catch(Exception e){
+                return null;
+            }
+    }
+
+    @Override
+    public void updateStockQuantityByProductName(String productName, Integer quantitySupplied, Date lastUpdated) {
+        Stock stock=getStockByProductName(productName);
+        stock.setQuantity(stock.getQuantity()+quantitySupplied);
+        stock.setLastUpdated(lastUpdated);
+        stockRepository.save(stock);
+    }
     
+    @Override
+    public void updateStockQuantity(String productName, Integer quantityOrdered, Date lastUpdated) {
+        Stock stock=getStockByProductName(productName);
+        stock.setQuantity(stock.getQuantity()-quantityOrdered);
+        stock.setLastUpdated(lastUpdated);
+        stockRepository.save(stock);
+    }
 }

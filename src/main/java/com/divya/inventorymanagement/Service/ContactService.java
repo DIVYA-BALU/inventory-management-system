@@ -12,7 +12,7 @@ public interface ContactService {
 
     Contact getContactById(int id);
 
-    Contact updateContactById(int id, Contact contact);
+    Contact updateContactById(Contact contact);
 
     String deleteContactById(int id);
     
