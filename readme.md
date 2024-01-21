@@ -1,6 +1,7 @@
 # Inventory Management System
 
-This web-based application is designed to help businesses manage stock levels, process orders, and maintain a comprehensive product catalog.
+This Spring Boot application serves as the backend for an Inventory Management System. It is designed to assist businesses in managing stock levels, processing orders, and maintaining a comprehensive product catalog.
+
 
 ## Features
 
