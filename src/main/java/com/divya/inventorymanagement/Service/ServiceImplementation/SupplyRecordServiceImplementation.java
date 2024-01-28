@@ -11,7 +11,7 @@ import com.divya.inventorymanagement.Service.StockService;
 import com.divya.inventorymanagement.Service.SupplyRecordService;
 
 @Service
-public class SupplyRecordServiceImplementation implements SupplyRecordService{
+public class SupplyRecordServiceImplementation implements SupplyRecordService {
 
     @Autowired
     private SupplyRecordRepository supplyRecordRepository;
@@ -21,40 +21,62 @@ public class SupplyRecordServiceImplementation implements SupplyRecordService{
 
     @Override
     public SupplyRecord updateSupplyRecord(SupplyRecord supplyRecord) {
-       try{
-          SupplyRecord supp = supplyRecordRepository.save(supplyRecord);
-           return supp;
-       }
-       catch(Exception e){
-           return null;
-       }
-    }
 
+        try {
+
+            Integer suppId = supplyRecord.getSupplyId();
+            if (suppId != null) {
+
+                Integer suppliedQuantity = supplyRecord.getQuantitySupplied();
+                System.out.println(suppliedQuantity);
+                Integer quantity = supplyRecordRepository.getQuantitySuppliedById(suppId);
+                System.out.println(quantity);
+                if (quantity != suppliedQuantity) {
+
+                    if (quantity > suppliedQuantity) {
+                        quantity = -(quantity - suppliedQuantity);
+                        System.out.println(quantity);
+                    } else {
+                        quantity = suppliedQuantity - quantity;
+                    }
+
+                    stockService.updateStockQuantityByProductName(supplyRecord.getProductName(), quantity,
+                            supplyRecord.getSupplyDate());
+                }
+            }
+            SupplyRecord supp = supplyRecordRepository.save(supplyRecord);
+            return supp;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @Override
     public SupplyRecord addSupplyRecord(SupplyRecord supplyRecord) {
-        try{
-           // condition to check if the product is already present in the stock then increment quantity of stock else add new stock details
+        try {
+            // condition to check if the product is already present in the stock then
+            // increment quantity of stock else add new stock details
             supplyRecordRepository.save(supplyRecord);
-            if(stockService.getStockByProductName(supplyRecord.getProductName())!=null){
-                stockService.updateStockQuantityByProductName(supplyRecord.getProductName(), supplyRecord.getQuantitySupplied(), supplyRecord.getSupplyDate());
+            if (stockService.getStockByProductName(supplyRecord.getProductName()) != null) {
+                stockService.updateStockQuantityByProductName(supplyRecord.getProductName(),
+                        supplyRecord.getQuantitySupplied(), supplyRecord.getSupplyDate());
+            } else {
+                stockService.addStock(supplyRecord.getProductName(), supplyRecord.getQuantitySupplied(),
+                        supplyRecord.getSupplyDate());
             }
-            else{
-                stockService.addStock(supplyRecord.getProductName(), supplyRecord.getQuantitySupplied(), supplyRecord.getSupplyDate());
-            }
-            return  supplyRecordRepository.save(supplyRecord);
-        }catch(Exception e){
+            return supplyRecordRepository.save(supplyRecord);
+        } catch (Exception e) {
             return null;
         }
     }
 
     @Override
     public List<SupplyRecord> getAllSupplyRecords() {
-        try{
+        try {
             return supplyRecordRepository.findAll();
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
-    
+
 }

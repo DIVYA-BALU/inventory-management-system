@@ -63,6 +63,7 @@ public class StockServiceImplementation implements StockService{
 
     @Override
     public void updateStockQuantityByProductName(String productName, Integer quantitySupplied, Date lastUpdated) {
+        System.out.println(quantitySupplied);
         Stock stock=getStockByProductName(productName);
         stock.setQuantity(stock.getQuantity()+quantitySupplied);
         stock.setLastUpdated(lastUpdated);
