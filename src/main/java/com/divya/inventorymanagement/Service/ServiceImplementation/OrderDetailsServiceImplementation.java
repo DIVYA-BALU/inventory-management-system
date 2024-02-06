@@ -27,8 +27,8 @@ public class OrderDetailsServiceImplementation implements OrderDetailsService {
 
     @Override
     public OrderDetails addOrderDetails(OrderDetails orderDetails) {
-        
-            orderDetailsRepository.save(orderDetails);
+
+            
             // get the quantity ordered and update the quantity in stock table
             int quantityOrdered = orderDetails.getQuantityOrdered();
             String productName = orderDetails.getProductName();
@@ -68,13 +68,17 @@ public class OrderDetailsServiceImplementation implements OrderDetailsService {
 
     @Override
     public OrderDetails updateOrderDetails(OrderDetails orderDetails) {
-        try {
+
+        int quantityOrdered = orderDetails.getQuantityOrdered();
+        String productName = orderDetails.getProductName();
+        Integer stockQuantity = stockRepository.getStockQuantity(productName);
+        if (stockQuantity < quantityOrdered) {
+            throw new StockNotAvailableException("Stock not available");
+        }
             OrderDetails orderDetailsToUpdate = orderDetailsRepository.findById(orderDetails.getOrderDetailsId()).get();
             orderDetailsRepository.save(orderDetailsToUpdate);
             return orderDetailsToUpdate;
-        } catch (Exception e) {
-            return null;
-        }
+        
     }
 
     @Override
