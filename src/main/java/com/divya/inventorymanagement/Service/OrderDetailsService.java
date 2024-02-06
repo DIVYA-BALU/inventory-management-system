@@ -2,6 +2,7 @@ package com.divya.inventorymanagement.Service;
 
 import java.util.List;
 
+import com.divya.inventorymanagement.Exception.StockNotAvailableException;
 import com.divya.inventorymanagement.Model.OrderDetails;
 
 public interface OrderDetailsService {

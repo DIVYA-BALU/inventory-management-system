@@ -27,13 +27,11 @@ public class OrderDetailsController {
     // Post request to add order details
     @PostMapping("/addorderdetails")
     public ResponseEntity<OrderDetails> addOrderDetails(@RequestBody OrderDetails orderDetails) {
-        try {
+        
             return ResponseEntity.ok(orderDetailsService.addOrderDetails(orderDetails));
-
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
     }
+
+    
     // Get request to get all order details
     @GetMapping("/getallorderdetails")
     public ResponseEntity<List<OrderDetails>> getAllOrderDetails() {

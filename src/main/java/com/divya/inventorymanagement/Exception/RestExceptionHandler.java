@@ -13,5 +13,10 @@ public class RestExceptionHandler {
         return new ResponseEntity<>("Email already exists",HttpStatus.BAD_REQUEST);
 
     }
+    @ExceptionHandler(value = StockNotAvailableException.class)
+    public ResponseEntity<?> handleStockNotAvailableException(){
+        return new ResponseEntity<>("Stock not available",HttpStatus.BAD_REQUEST);
+
+    }
 
 }

@@ -6,13 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.divya.inventorymanagement.Exception.StockNotAvailableException;
 import com.divya.inventorymanagement.Model.OrderDetails;
 import com.divya.inventorymanagement.Repository.OrderDetailsRepository;
+import com.divya.inventorymanagement.Repository.StockRepository;
 import com.divya.inventorymanagement.Service.OrderDetailsService;
 import com.divya.inventorymanagement.Service.StockService;
 
 @Service
-public class OrderDetailsServiceImplementation implements OrderDetailsService{
+public class OrderDetailsServiceImplementation implements OrderDetailsService {
 
     @Autowired
     private OrderDetailsRepository orderDetailsRepository;
@@ -20,36 +22,46 @@ public class OrderDetailsServiceImplementation implements OrderDetailsService{
     @Autowired
     private StockService stockService;
 
+    @Autowired
+    StockRepository stockRepository;
+
     @Override
     public OrderDetails addOrderDetails(OrderDetails orderDetails) {
-        try{
+        
             orderDetailsRepository.save(orderDetails);
-            //get the quantity ordered and update the quantity in stock table
+            // get the quantity ordered and update the quantity in stock table
             int quantityOrdered = orderDetails.getQuantityOrdered();
             String productName = orderDetails.getProductName();
             Date datePurchased = orderDetails.getOrderDate();
-            stockService.updateStockQuantity(productName, quantityOrdered,datePurchased);
 
-            return orderDetailsRepository.save(orderDetails);
-        }catch(Exception e){
-            return null;
-        }
+            Integer stockQuantity = stockRepository.getStockQuantity(productName);
+
+            System.out.println("Stock Quantity: " + quantityOrdered);
+            if (stockQuantity < quantityOrdered) {
+                throw new StockNotAvailableException("Stock not available");
+            } else {
+                stockService.updateStockQuantity(productName, quantityOrdered, datePurchased);
+                return orderDetailsRepository.save(orderDetails);
+            }
+
+            // return orderDetailsRepository.save(orderDetails);
+       
     }
 
     @Override
     public List<OrderDetails> getAllOrderDetails() {
-        try{
+        try {
             return orderDetailsRepository.findAll();
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
 
     @Override
     public OrderDetails getOrderDetailsById(int id) {
-        try{
+        try {
             return orderDetailsRepository.findById(id).get();
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -62,26 +74,26 @@ public class OrderDetailsServiceImplementation implements OrderDetailsService{
             return orderDetailsToUpdate;
         } catch (Exception e) {
             return null;
-        } 
+        }
     }
 
     @Override
     public String deleteOrderDetailsById(int id) {
-        try{
+        try {
             orderDetailsRepository.deleteById(id);
             return "Order details deleted successfully";
-        }catch(Exception e){
+        } catch (Exception e) {
             return "Order details not found";
         }
     }
 
     @Override
     public List<OrderDetails> sortByDatePurchased() {
-        try{
+        try {
             return orderDetailsRepository.sortByDatePurchasedDesc();
-        }catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
-    
+
 }

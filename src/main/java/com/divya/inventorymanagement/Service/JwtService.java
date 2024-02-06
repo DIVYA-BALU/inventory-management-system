@@ -1,12 +1,15 @@
 package com.divya.inventorymanagement.Service;
 
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
-
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +39,17 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>(extraClaims);
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+    if (authorities != null && !authorities.isEmpty()) {
+        List<String> roles = authorities.stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.toList());
+        claims.put("roles", roles);
+    }
+
         return Jwts.builder()
-                .setClaims(extraClaims)
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+86400000))

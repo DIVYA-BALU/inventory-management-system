@@ -24,4 +24,9 @@ public interface StockRepository extends JpaRepository<Stock,Integer>{
     @Query("SELECT s FROM Stock s ORDER BY s.LastUpdated DESC")
     List<Stock> sortStockByLastUpdatedDate();
 
+    //Query to get stock quantity by product name
+    @Query("SELECT s.quantity FROM Stock s WHERE s.productName = :productName")
+    Integer getStockQuantity(String productName);
+
+    
 }
